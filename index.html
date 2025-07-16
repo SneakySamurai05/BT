@@ -1,0 +1,166 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Banchhode Traders - Premium Edible Oils</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div><strong>Banchhode Traders</strong></div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#about">About Us</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a href="#contact" class="cta">Location</a>
+  </header>
+
+  <section class="hero" id="home">
+    <h1>Welcome to Banchhode Traders</h1>
+    <p>Your trusted source for premium edible oils that bring purity and health to your kitchen.</p>
+    <button class="btn">Explore Our Products</button>
+  </section>
+
+  <section id="products">
+    <h2>Our Products</h2>
+    <div class="products-grid">
+      <div class="product-card">
+        <h3>Cottonseed Oil</h3>
+        <p>Light, neutral taste. Ideal for frying and cooking.</p>
+        <p><strong>Benefits:</strong> High in antioxidants and vitamin E.</p>
+      </div>
+      <div class="product-card">
+        <h3>Sunflower Oil</h3>
+        <p>Mild flavor perfect for everyday use.</p>
+        <p><strong>Benefits:</strong> Rich in unsaturated fats and good for heart health.</p>
+      </div>
+      <div class="product-card">
+        <h3>Groundnut Oil</h3>
+        <p>Nutty flavor. Perfect for deep-frying and Indian cuisine.</p>
+        <p><strong>Benefits:</strong> High smoke point and cholesterol-free.</p>
+      </div>
+      <div class="product-card">
+        <h3>Mustard Oil</h3>
+        <p>Pungent and bold, ideal for traditional cooking.</p>
+        <p><strong>Benefits:</strong> Anti-bacterial and great for skin and immunity.</p>
+      </div>
+      <div class="product-card">
+        <h3>Sesame Oil</h3>
+        <p>Rich aroma and flavor. Widely used in Asian dishes.</p>
+        <p><strong>Benefits:</strong> Rich in calcium, zinc, and antioxidants.</p>
+      </div>
+      <div class="product-card">
+        <h3>Coconut Oil</h3>
+        <p>Natural and fragrant. Suitable for cooking and hair care.</p>
+        <p><strong>Benefits:</strong> Boosts metabolism and nourishes skin.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>Banchhode Traders has been a trusted name in the edible oil industry for over a decade. Our mission is to provide pure, high-quality oils that support healthy living and enhance every meal. We source directly from the best farms and ensure minimal processing to retain nutritional value and natural flavors. With a strong commitment to transparency and quality, Banchhode Traders is your partner in a healthier lifestyle.</p>
+  </section>
+
+
+  <section class="contact-section">
+  <div class="map-container">
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3821.5703150964027!2d74.2223872!3d16.698371899999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc1000b4b5daa09%3A0x865c58ce6500cb51!2sM%2Fs.%20Banchhode%20Traders!5e0!3m2!1sen!2sin!4v1752676236083!5m2!1sen!2sin" 
+width="500" 
+height="450" 
+style="border:0;" 
+allowfullscreen="" 
+loading="lazy" 
+referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </div>
+  <div class="contact-info">
+ 
+    <h2>Welcome to BT</h2>
+    <div class="info">
+      <p>🕒 <strong>Opening Hours:</strong> 9:00am – 9:00pm</p>
+      <p>📍 <strong>Location:</strong>Papachi Tikati, Kolhapur, Maharashtra 416002</p>
+
+</section>
+
+
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p><strong>Phone:</strong> +91-7709919013</p>
+    <p><strong>Email:</strong> info@banchhodetraders.com</p>
+<div> 
+    <form class="contact-form">
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+    <button type="submit">
+    <div class="svg-wrapper-1">
+    <div class="svg-wrapper">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        width="24"
+        height="24"
+      >
+        <path fill="none" d="M0 0h24v24H0z"></path>
+        <path
+          fill="currentColor"
+          d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+        ></path>
+       </svg>
+       </div>
+ 
+       </div>
+  <span>Send</span>
+</button>
+      </div>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Banchhode Traders. All rights reserved.</p>
+  </footer>
+</body>
+</html>
